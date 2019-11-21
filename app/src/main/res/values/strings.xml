@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Workout Exercise</string>
+    <string name="txt_label_sets">SETS</string>
+    <string name="txt_label_reps">REPS</string>
+    <string name="txt_label_weight">WEIGHT</string>
+    <string name="txt_rest_timer">Rest timer</string>
+    <string name="txt_label_next_up">NEXT UP</string>
+    <string name="txt_5lb_x_2">5lb x 2</string>
+    <string name="txt_label_skip_timer">Skip Timer</string>
+</resources>

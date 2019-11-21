@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="100dp"
+    android:background="@android:color/white"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="90dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btnClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:padding="10dp"
+                android:tint="@color/colorItemSet"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_back" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitleTimer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@string/txt_rest_timer"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnClose" />
+
+
+            <com.github.lzyzsd.circleprogress.DonutProgress
+                android:id="@+id/pbTimer"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitleTimer"
+                custom:starting_degree="360" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTimber"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="14dp"
+                android:background="@drawable/bg_timer"
+                android:gravity="center"
+                android:text="00:45"
+                android:textColor="@color/colorApp"
+                android:textSize="42sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/pbTimer"
+                app:layout_constraintEnd_toEndOf="@+id/pbTimer"
+                app:layout_constraintStart_toStartOf="@+id/pbTimer"
+                app:layout_constraintTop_toTopOf="@+id/pbTimer"
+                custom:donut_text_color="@color/colorApp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnDecrease"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_circle_view"
+                android:gravity="center"
+                android:text="-30s"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pbTimer" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnIncrease"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/bg_circle_view"
+                android:gravity="center"
+                android:text="+30s"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pbTimer" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/bg_rounder"
+                android:paddingStart="10dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnIncrease">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLabelNextUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:minHeight="24dp"
+                    android:text="@string/txt_label_next_up"
+                    android:textColor="@color/colorTitleSet"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/setPhoto"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_set_example"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLabelNextUp"
+                    app:riv_corner_radius="10dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="24dp"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:maxLines="1"
+                    android:text="@string/txt_rest_timer"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/setPhoto"
+                    app:layout_constraintTop_toTopOf="@+id/setPhoto" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvWeight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_5lb_x_2"
+                    android:textColor="@color/colorTitleSet"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="@+id/tvName"
+                    app:layout_constraintStart_toStartOf="@+id/tvName"
+                    app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnSkipTimber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginBottom="30dp"
+                android:background="?selectableItemBackground"
+                android:minHeight="24dp"
+                android:text="@string/txt_label_skip_timer"
+                android:textColor="@color/colorTitleSet"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</com.google.android.material.card.MaterialCardView>

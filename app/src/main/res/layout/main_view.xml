@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/topPattern"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_pattern"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
+        android:layout_height="?actionBarSize"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_timer" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal|top"
+            android:paddingTop="16dp"
+            android:text="Total Duration: 00:00"
+            android:textColor="@color/colorTopTitle"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnTimer"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/exImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBar">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="257dp"
+                    android:layout_margin="24dp"
+                    android:background="@drawable/bg_rounder"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnPlay"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_circle_view"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivPhoto"
+                    app:layout_constraintEnd_toEndOf="@+id/ivPhoto"
+                    app:layout_constraintStart_toStartOf="@+id/ivPhoto"
+                    app:layout_constraintTop_toTopOf="@+id/ivPhoto" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginLeft="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnPlay"
+                    app:layout_constraintEnd_toEndOf="@+id/btnPlay"
+                    app:layout_constraintStart_toStartOf="@+id/btnPlay"
+                    app:layout_constraintTop_toTopOf="@+id/btnPlay"
+                    app:srcCompat="@drawable/ic_play" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSetTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="24dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Plank with Twist"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivPhoto" />
+
+                <View
+                    android:id="@+id/setDeliver"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@color/colorDeliver"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvSetTitle" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="24dp"
+                    android:minHeight="100dp"
+                    app:cardBackgroundColor="@color/colorSetBackground"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/setDeliver">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/setHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideLineVerticalCenter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.45" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideLineVerticalEnd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.8" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideLineVerticalStart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.08" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvSetNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginLeft="4dp"
+                            android:minHeight="30dp"
+                            android:text="@string/txt_label_sets"
+                            android:textColor="@color/colorTitleSet"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="@+id/guideLineVerticalStart"
+                            app:layout_constraintStart_toStartOf="@+id/guideLineVerticalStart"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_label_reps"
+                            android:textColor="@color/colorTitleSet"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@+id/guideLineVerticalEnd"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_label_weight"
+                            android:textColor="@color/colorTitleSet"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@+id/guideLineVerticalCenter"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/topDeliver"
+                            android:layout_width="0dp"
+                            android:layout_height="0.5dp"
+                            android:background="@color/colorDeliver"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvSetNo" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvSets"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/topDeliver" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/viewMiniTimber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.github.lzyzsd.circleprogress.DonutProgress
+            android:id="@+id/pbMiniTimber"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            custom:finished_stroke_width="3dp"
+            custom:inner_bottom_text_size="0sp"
+            custom:starting_degree="360"
+            custom:unfinished_stroke_width="3dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMiniTimber"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="00:45"
+            android:textColor="@color/colorApp"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/pbMiniTimber"
+            app:layout_constraintEnd_toEndOf="@+id/pbMiniTimber"
+            app:layout_constraintStart_toStartOf="@+id/pbMiniTimber"
+            app:layout_constraintTop_toTopOf="@+id/pbMiniTimber" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
