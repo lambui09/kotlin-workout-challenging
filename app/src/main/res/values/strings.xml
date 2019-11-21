@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EveryFitness.IO</string>
+    <string name="app_name">EverFitness.IO</string>
     <string name="txt_label_sets">SETS</string>
     <string name="txt_label_reps">REPS</string>
     <string name="txt_label_weight">WEIGHT</string>
