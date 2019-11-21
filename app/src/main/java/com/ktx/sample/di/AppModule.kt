@@ -1,6 +1,6 @@
-package com.ktx.sample.ui.di
+package com.ktx.sample.di
 
-import com.ktx.sample.ui.views.WorkoutViewModel
+import com.ktx.sample.views.WorkoutViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

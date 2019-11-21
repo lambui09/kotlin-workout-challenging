@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/main_view" />
+    <include layout="@layout/view_main" />
 
-    <include layout="@layout/bottom_sheet" />
+    <include layout="@layout/view_rest_timer" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

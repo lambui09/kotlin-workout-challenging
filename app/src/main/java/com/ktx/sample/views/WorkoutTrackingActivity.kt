@@ -1,9 +1,10 @@
-package com.ktx.sample.ui.views
+package com.ktx.sample.views
 
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Handler
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -12,6 +13,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -21,27 +23,61 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.ktx.sample.R
-import com.ktx.sample.ui.data.model.TrainingSet
-import com.ktx.sample.ui.data.model.Workout
-import kotlinx.android.synthetic.main.bottom_sheet.*
-import kotlinx.android.synthetic.main.main_view.*
+import com.ktx.sample.data.model.TrainingSet
+import com.ktx.sample.data.model.Workout
+import com.ktx.sample.utils.makeStatusBarTransparent
+import com.ktx.sample.utils.setMarginTop
+import kotlinx.android.synthetic.main.view_rest_timer.*
+import kotlinx.android.synthetic.main.view_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 
 class WorkoutTrackingActivity : AppCompatActivity() {
 
+    private val viewModel: WorkoutViewModel by viewModel()
+
     private var trainingSetAdapter: TrainingSetAdapter? = null
     private var sheetBehavior: BottomSheetBehavior<*>? = null
-    private var threadTimer: Thread? = null
     private var trainingTime = INIT_TIME
     private var totalDuration = 0L
+    private var handler = Handler()
+    private var isStartWorkout = false
 
-    private val viewModel: WorkoutViewModel by viewModel()
+    private var runnable = Runnable {
+        updateRemainingTime(trainingTime)
+
+        // -1 second
+        trainingTime -= ONE_SECOND
+
+        // If time over, just hide and stop
+        if (trainingTime <= 0) {
+            sheetBehavior?.isHideable = true
+            sheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
+            viewMiniTimber.visibility = View.GONE
+            this.stopTrainingTimer()
+            return@Runnable
+        }
+
+        pbTimer.progress = pbTimer.progress + 1
+        pbMiniTimber.progress = pbTimer.progress + 1
+
+        totalDuration += 1
+        setTotalDuration(totalDuration)
+
+        // Post new
+        this.startTrainingTimer()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.workout_tracking_activity)
+
+        makeStatusBarTransparent()
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.content_container)) { _, insets ->
+            topBar.setMarginTop(insets.systemWindowInsetTop)
+            insets.consumeSystemWindowInsets()
+        }
 
         this.initBottomSheet()
         this.initActions()
@@ -49,20 +85,37 @@ class WorkoutTrackingActivity : AppCompatActivity() {
 
         // Loading data from json file
         this.viewModel.getExercise(this, JSON_FILE_NAME)
+
+        // Init total duration
+        setTotalDuration(0)
     }
 
     private fun onSubscriber() {
         with(viewModel) {
             exerciseDataResponse.observe(this@WorkoutTrackingActivity, Observer {
-                // Load data on list here!!
                 showingData(it)
             })
         }
     }
 
+    override fun onPause() {
+        this.stopTrainingTimer()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        this.startTrainingTimer()
+        super.onResume()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        this.stopTrainingTimer()
+    }
+
     private fun initActions() {
         btnBack.setOnClickListener {
-            // TODO back action
+            this.finish()
         }
 
         btnTimer.setOnClickListener {
@@ -91,7 +144,7 @@ class WorkoutTrackingActivity : AppCompatActivity() {
             sheetBehavior?.isHideable = true
             sheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
             viewMiniTimber.visibility = View.GONE
-            this.stopTimer()
+            this.stopTrainingTimer()
         }
 
         viewMiniTimber.setOnClickListener {
@@ -175,7 +228,7 @@ class WorkoutTrackingActivity : AppCompatActivity() {
         pbTimer.unfinishedStrokeWidth = 20f
         pbTimer.isShowText = false
         pbTimer.progress = 0f
-        tvTimber.text = "00:00"
+        tvTimber.text = "01:00"
 
         // Init mini timer
         pbMiniTimber.startingDegree = 270
@@ -186,14 +239,20 @@ class WorkoutTrackingActivity : AppCompatActivity() {
         pbMiniTimber.unfinishedStrokeWidth = 14f
         pbMiniTimber.isShowText = false
         pbMiniTimber.progress = 0f
-        tvMiniTimber.text = "00:00"
+        tvMiniTimber.text = "01:00"
     }
 
     private fun openTrainingSet() {
+        this.isStartWorkout = true
         this.loadTrainingSetForRest()
         this.initProgress()
         sheetBehavior?.state = BottomSheetBehavior.STATE_EXPANDED
-        this.startTimer()
+
+        trainingTime = INIT_TIME
+        pbTimer.max = (trainingTime / ONE_SECOND).toInt()
+        pbMiniTimber.max = (trainingTime / ONE_SECOND).toInt()
+
+        this.startTrainingTimer()
     }
 
     private fun decreaseTimeClicked() {
@@ -214,19 +273,16 @@ class WorkoutTrackingActivity : AppCompatActivity() {
         val workout = viewModel.exerciseDataResponse.value
 
         workout?.trainingSets?.forEach {
+            // TODO if completed, done show next up
             if (it.isCompleted == true) return
 
             loadImage(workout.exercise?.image, setPhoto)
             tvName.text = workout.exercise?.title
 
-            tvWeight.text = String.format("%dlb", it.weight?.value?.toInt())
+            tvSetWeight.text = String.format("%dlb", it.weight?.value?.toInt())
 
             return@forEach
         }
-    }
-
-    private fun stopTimer() {
-        this.threadTimer?.interrupt()
     }
 
     private fun setTotalDuration(totalDuration: Long) {
@@ -240,13 +296,13 @@ class WorkoutTrackingActivity : AppCompatActivity() {
 
         spannableContent.setSpan(
             color,
-            totalDisplay.length - 5,
+            totalDisplay.length - TIME_LENGTH,
             totalDisplay.length,
             Spannable.SPAN_INCLUSIVE_INCLUSIVE
         )
         spannableContent.setSpan(
             style,
-            totalDisplay.length - 5,
+            totalDisplay.length - TIME_LENGTH,
             totalDisplay.length,
             Spannable.SPAN_INCLUSIVE_INCLUSIVE
         )
@@ -254,52 +310,31 @@ class WorkoutTrackingActivity : AppCompatActivity() {
         tvTitle.text = spannableContent
     }
 
+    private fun updateRemainingTime(time: Long) {
+        val minutes =
+            TimeUnit.MILLISECONDS.toMinutes(time) % TimeUnit.HOURS.toMinutes(1)
+        val seconds =
+            TimeUnit.MILLISECONDS.toSeconds(time) % TimeUnit.MINUTES.toSeconds(1)
+        tvTimber.text = String.format("%02d:%02d", minutes, seconds)
+        tvMiniTimber.text = String.format("%02d:%02d", minutes, seconds)
+    }
 
-    private fun startTimer() {
-        trainingTime = INIT_TIME
-        pbTimer.max = (trainingTime / ONE_SECOND).toInt()
-        pbMiniTimber.max = (trainingTime / ONE_SECOND).toInt()
 
-        threadTimer = object: Thread() {
-            override fun run() {
-               try {
-                   while (!isInterrupted) {
-                       sleep(ONE_SECOND.toLong())
-                       runOnUiThread {
-                           trainingTime -= ONE_SECOND
+    private fun startTrainingTimer() {
+        if (!isStartWorkout) return
 
-                           if (trainingTime <= 0) {
-                               sheetBehavior?.isHideable = true
-                               sheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
-                               viewMiniTimber.visibility = View.GONE
-                               interrupt()
-                               return@runOnUiThread
-                           }
+        runnable.let { handler.postDelayed(it, ONE_SECOND) }
+    }
 
-                           val minutes = TimeUnit.MILLISECONDS.toMinutes(trainingTime) % TimeUnit.HOURS.toMinutes(1)
-                           val seconds = TimeUnit.MILLISECONDS.toSeconds(trainingTime) % TimeUnit.MINUTES.toSeconds(1)
-
-                           tvTimber.text = String.format("%02d:%02d", minutes, seconds)
-                           pbTimer.progress = pbTimer.progress + 1
-
-                           // set for mini timer
-                           tvMiniTimber.text = String.format("%02d:%02d", minutes, seconds)
-                           pbMiniTimber.progress = pbTimer.progress + 1
-                           totalDuration += 1
-                           setTotalDuration(totalDuration)
-                       }
-                   }
-               } catch (e: InterruptedException) {}
-            }
-        }
-
-        threadTimer?.start()
+    private fun stopTrainingTimer() {
+        runnable.let { handler.removeCallbacks(it) }
     }
 
     companion object {
         const val JSON_FILE_NAME = "exercise_data.json"
         const val INIT_TIME = 60000L
-        const val ONE_SECOND = 1000
+        const val ONE_SECOND = 1000L
         const val THIRTY_SECONDS = 30 * ONE_SECOND
+        const val TIME_LENGTH = 5
     }
 }

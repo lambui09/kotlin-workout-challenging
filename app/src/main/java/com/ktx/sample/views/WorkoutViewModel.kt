@@ -1,10 +1,10 @@
-package com.ktx.sample.ui.views
+package com.ktx.sample.views
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.ktx.sample.ui.data.model.Workout
+import com.ktx.sample.data.model.Workout
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy

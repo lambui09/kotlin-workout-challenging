@@ -178,7 +178,7 @@
 
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvWeight"
+                    android:id="@+id/tvSetWeight"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/txt_5lb_x_2"
@@ -196,9 +196,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginLeft="4dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="20dp"
                 android:background="?selectableItemBackground"
                 android:minHeight="24dp"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp"
                 android:text="@string/txt_label_skip_timer"
                 android:textColor="@color/colorTitleSet"
                 android:textSize="15sp"

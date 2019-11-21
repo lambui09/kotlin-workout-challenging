@@ -1,4 +1,4 @@
-package com.ktx.sample.ui.views
+package com.ktx.sample.views
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ktx.sample.R
-import com.ktx.sample.ui.data.model.TrainingSet
+import com.ktx.sample.data.model.TrainingSet
 import kotlinx.android.synthetic.main.item_set.view.*
 
 /**

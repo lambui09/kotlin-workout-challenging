@@ -1,7 +1,7 @@
 package com.ktx.sample
 
 import android.app.Application
-import com.ktx.sample.ui.di.appModule
+import com.ktx.sample.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

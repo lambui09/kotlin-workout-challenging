@@ -1,4 +1,4 @@
-package com.ktx.sample.ui.data.model
+package com.ktx.sample.data.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

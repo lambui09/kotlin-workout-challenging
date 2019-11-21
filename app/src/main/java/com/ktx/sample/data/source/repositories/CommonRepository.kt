@@ -1,4 +1,4 @@
-package com.ktx.sample.ui.data.source.repositories
+package com.ktx.sample.data.source.repositories
 
 /**
  * ---------------------------
@@ -11,5 +11,5 @@ interface CommonRepository {
 }
 
 class CommonRepositoryImpl: CommonRepository {
-
+  // TODO
 }
