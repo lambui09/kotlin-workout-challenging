@@ -14,8 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".views.nals.CityActivity"></activity>
         <activity
-            android:name="com.ktx.sample.views.WorkoutTrackingActivity"
+            android:name=".views.WorkoutTrackingActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
